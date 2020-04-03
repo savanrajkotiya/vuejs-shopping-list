@@ -6,22 +6,31 @@
       class="btn btn-primary"
       v-on:click="addNew(newItem)"
       v-bind:disabled="newItem === ''"
-    >Add Item</button>
+    >
+      Add Item
+    </button>
     <ul>
-      <li
+      <product
         v-for="item in updatedProducts"
         :key="item.id"
-        :class="!item.isStock ? 'strikeout' : '' "
-      >{{ item.name }}</li>
+        :className="!item.isStock ? 'strikeout' : ''"
+        :name="item.name"
+        :productObj="item"
+        @onClick="onClickProduct"
+      ></product>
     </ul>
   </div>
 </template>
 
 <script>
 import { productsList } from "../shared/data/products";
+import product from "./Product.vue";
 
 export default {
   name: "ShoppingList",
+  components: {
+    product
+  },
   data() {
     return {
       header: "shopping list app",
@@ -38,6 +47,10 @@ export default {
       };
       this.products.push(dataItem);
       this.newItem = "";
+    },
+    onClickProduct(data) {
+      // eslint-disable-next-line no-console
+      console.log(data["name"]);
     }
   },
   computed: {
@@ -49,7 +62,7 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style >
+<style>
 body {
   background: #eff8ff;
   height: 100vh;

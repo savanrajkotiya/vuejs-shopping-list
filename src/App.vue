@@ -1,18 +1,12 @@
 <template>
   <div id="app">
-    <ShoppingList />
+    <router-view />
   </div>
 </template>
 
 <script>
-import ShoppingList from "./components/ShoppingList.vue";
-
 export default {
-  name: "app",
-  components: {
-    // eslint-disable-next-line vue/no-unused-components
-    ShoppingList
-  }
+  name: "app"
 };
 </script>
 
