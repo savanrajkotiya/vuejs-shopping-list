@@ -1,14 +1,12 @@
 <template>
   <div id="shopping-list">
-    <h1>{{ header.toLocaleUpperCase() }}</h1>
+    <h1>{{ header | capitalize}}</h1>
     <input type="text" v-model="newItem" placeholder="add new item.." />
     <button
       class="btn btn-primary"
       v-on:click="addNew(newItem)"
       v-bind:disabled="newItem === ''"
-    >
-      Add Item
-    </button>
+    >Add Item</button>
     <ul>
       <product
         v-for="item in updatedProducts"
@@ -56,6 +54,19 @@ export default {
   computed: {
     updatedProducts() {
       return this.products.slice(0).reverse();
+    }
+  },
+  watch: {
+    newItem() {
+      // eslint-disable-next-line no-console
+      // console.log("value change", newValue, oldValue);
+    }
+  },
+  filters: {
+    capitalize: value => {
+      if (!value) return "";
+      value = value.toString();
+      return value.toUpperCase();
     }
   }
 };
