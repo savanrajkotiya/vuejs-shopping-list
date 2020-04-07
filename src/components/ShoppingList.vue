@@ -23,6 +23,7 @@
 <script>
 import { productsList } from "../shared/data/products";
 import product from "./Product.vue";
+import axios from "axios";
 
 export default {
   name: "ShoppingList",
@@ -68,6 +69,18 @@ export default {
       value = value.toString();
       return value.toUpperCase();
     }
+  },
+  created() {
+    axios
+      .get("https://reqres.in/api/users?page=2")
+      .then(response => {
+        // eslint-disable-next-line no-console
+        console.log(response.data);
+      })
+      .catch(error => {
+        // eslint-disable-next-line no-console
+        console.log(error);
+      });
   }
 };
 </script>
