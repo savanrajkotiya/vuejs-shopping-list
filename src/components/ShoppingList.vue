@@ -1,6 +1,6 @@
 <template>
   <div id="shopping-list">
-    <h1>{{ header | capitalize}}</h1>
+    <h1>{{ header | capitalize }}</h1>
     <input type="text" v-model="newItem" placeholder="add new item.." />
     <button
       class="btn btn-primary"
@@ -21,8 +21,8 @@
 </template>
 
 <script>
-import { productsList } from "../shared/data/products";
 import product from "./Product.vue";
+import router from "../routes";
 
 export default {
   name: "ShoppingList",
@@ -32,28 +32,27 @@ export default {
   data() {
     return {
       header: "shopping list app",
-      newItem: "",
-      products: productsList
+      newItem: ""
     };
   },
   methods: {
     addNew(item) {
       let dataItem = {
-        id: Math.random(),
+        id: this.$store.state.products.length + 1,
         name: item,
         isStock: true
       };
-      this.products.push(dataItem);
+      this.$store.dispatch("addProduct", dataItem);
+      // this.products.push(dataItem);
       this.newItem = "";
     },
     onClickProduct(data) {
-      // eslint-disable-next-line no-console
-      console.log(data["name"]);
+      router.push({ path: `/product/detail/${data["id"]}` }); // -
     }
   },
   computed: {
     updatedProducts() {
-      return this.products.slice(0).reverse();
+      return this.$store.getters.reverseProducts;
     }
   },
   watch: {
@@ -68,6 +67,9 @@ export default {
       value = value.toString();
       return value.toUpperCase();
     }
+  },
+  created() {
+    this.$store.dispatch("fetchProducts");
   }
 };
 </script>
