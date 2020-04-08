@@ -29,7 +29,7 @@ export default {
   },
   mounted() {
     // eslint-disable-next-line no-console
-    console.log(this.$props);
+    // console.log(this.$props);
   }
 };
 </script>
